@@ -30,7 +30,9 @@ Meeting::Meeting(const std::string &t_sponsor,
   }
 
   void Meeting::addParticipator(const std::string &t_participator){
-      this->m_participators.push_back(t_participator);
+      if(!isParticipator(t_participator)){
+        this->m_participators.push_back(t_participator);
+      }
   }
 
   void Meeting::removeParticipator(const std::string &t_participator){
