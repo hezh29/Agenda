@@ -85,7 +85,7 @@ bool Date::isValid(const Date &t_date){
     if( t_date.m_year >= 1000 && t_date.m_year <= 9999 && 
         t_date.m_month > 0 && t_date.m_month <= 12 && 
         t_date.m_day > 0 && t_date.m_day <= dayOfMons[t_date.m_month - 1] && 
-        t_date.m_hour >= 0 && t_date.m_hour <= 59 && 
+        t_date.m_hour >= 0 && t_date.m_hour <= 23 && 
         t_date.m_minute >= 0 && t_date.m_minute <= 59){
             return true;
     }

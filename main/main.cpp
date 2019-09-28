@@ -7,12 +7,8 @@
 using namespace std;
 
 int main(){
-   Meeting m;
-    m.addParticipator("m");
-    m.addParticipator("m");
-    m.addParticipator("n");
-    m.removeParticipator("m");
 
-    cout << m.isParticipator("n");
+
+    cout << Date::isValid(Date("1000-10-10/00:00"));
     return 0;
 }
