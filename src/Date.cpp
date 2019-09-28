@@ -8,15 +8,7 @@ Date::Date(): m_year(0), m_month(0), m_day(0), m_hour(0),
 
 Date::Date(int t_year, int t_month, int t_day, int t_hour, int t_minute): 
        m_year(t_year), m_month(t_month), m_day(t_day), m_hour(t_hour), 
-       m_minute(t_minute){
-           if(!Date::isValid(*this)){
-                       m_year = 0;
-                       m_month = 0;
-                       m_day = 0;
-                       m_hour = 0;
-                       m_minute = 0;
-           }
-       }
+       m_minute(t_minute){}
 
 Date::Date(const std::string &dateString){
     std::regex format("([0-9]{4})-([0-9]{2})-([0-9]{2})/([0-9]{2}):([0-9]{2})");
@@ -30,14 +22,6 @@ Date::Date(const std::string &dateString){
         m_minute = std::stoi(match[5].str());
     }
     else{
-        m_year = 0;
-        m_month = 0;
-        m_day = 0;
-        m_hour = 0;
-        m_minute = 0;
-    }
-
-    if(!Date::isValid(*this)){
         m_year = 0;
         m_month = 0;
         m_day = 0;
@@ -111,22 +95,27 @@ bool Date::isValid(const Date &t_date){
 }
 
 Date Date::stringToDate(const std::string &t_dateString){
-    return Date(t_dateString);
+        return Date(t_dateString); 
 }
 
 std::string Date::dateToString(const Date &t_date){
     std::stringstream ss;
     std::string s;
 
-    ss << std::setfill('0') << std::setw(4) << t_date.m_year << 
-        "-"  <<std::setw(2) << t_date.m_month << 
-        "-" << std::setw(2) << t_date.m_day << 
-        "/" <<std::setw(2) << t_date.m_hour << 
-        ":" << std::setw(2) << t_date.m_minute;
+    if(!isValid(t_date)){
+        return "0000-00-00/00:00";
+    }
+    else{
+        ss << std::setfill('0') << std::setw(4) << t_date.m_year << 
+            "-"  <<std::setw(2) << t_date.m_month << 
+            "-" << std::setw(2) << t_date.m_day << 
+            "/" <<std::setw(2) << t_date.m_hour << 
+            ":" << std::setw(2) << t_date.m_minute;
 
-    ss >> s;
+        ss >> s;
 
-    return s;
+        return s;
+    }
 }
 
 Date &Date::operator=(const Date &t_date){
