@@ -163,7 +163,7 @@ std::list<User> Storage::queryUser(std::function<bool(const User &)> filter) con
 int Storage::updateUser(std::function<bool(const User &)> filter, std::function<void(User &)> switcher){
     int count = 0;
 
-    for(auto user : m_userList){
+    for(auto &user : m_userList){
         if(filter(user)){
             switcher(user);
             count++;
@@ -208,7 +208,7 @@ std::list<Meeting> Storage::queryMeeting(std::function<bool(const Meeting &)> fi
 int Storage::updateMeeting(std::function<bool(const Meeting &)> filter, std::function<void(Meeting &)> switcher){
     int count = 0;
 
-    for(auto metting : m_meetingList){
+    for(auto &metting : m_meetingList){
         if(filter(metting)){
             switcher(metting);
             count++;
