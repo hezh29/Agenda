@@ -2,7 +2,6 @@
 #include<regex>
 #include"Storage.hpp"
 #include"Path.hpp"
-#include<iostream>
 
 std::shared_ptr<Storage> Storage::m_instance = NULL;
 
@@ -186,6 +185,8 @@ int Storage::deleteUser(std::function<bool(const User &)> filter){
             i++;
         }
     }
+
+    return count;
 }
 
 void Storage::createMeeting(const Meeting &t_meeting){
@@ -229,6 +230,8 @@ int Storage::deleteMeeting(std::function<bool(const Meeting &)> filter){
             i++;
         }
     }
+
+    return count;
 }
 
 bool Storage::sync(void){
