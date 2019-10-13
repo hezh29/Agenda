@@ -21,12 +21,12 @@ int main(){
     // cout << i.getTitle() << endl<<endl;
     // }
 
-    // Meeting m;
+    Meeting m;
     
     // m.setSponsor("Geralt of Rivia");
     // m.setParticipator({"Naked Snake","Lara Croft"});
     // m.setStartDate(Date("2016-07-10/15:00"));
-    // m.setEndDate(Date("2016-07-10/18:00"));
+    // m.setEndDate({"2016-07-10/18:00"});
     // m.setTitle("Want a few rounds of Gwent?");
     //  storage->createMeeting(m);
     //  cout << storage->sync();

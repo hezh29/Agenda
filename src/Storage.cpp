@@ -7,6 +7,7 @@ std::shared_ptr<Storage> Storage::m_instance = NULL;
 
 Storage::Storage(){
     readFromFile();
+    m_dirty = false;
 }
 
 bool Storage::readFromFile(void){
@@ -146,6 +147,7 @@ Storage::~Storage(){
 
 void Storage::createUser(const User &t_user){
     m_userList.push_back(t_user);
+    m_dirty = true;
 }
 
 std::list<User> Storage::queryUser(std::function<bool(const User &)> filter) const{
@@ -170,6 +172,10 @@ int Storage::updateUser(std::function<bool(const User &)> filter, std::function<
         }
     }
 
+    if(count > 0){
+        m_dirty = true;
+    }
+
     return count;
 }
 
@@ -186,11 +192,16 @@ int Storage::deleteUser(std::function<bool(const User &)> filter){
         }
     }
 
+    if(count > 0){
+        m_dirty = true;
+    }
+
     return count;
 }
 
 void Storage::createMeeting(const Meeting &t_meeting){
     m_meetingList.push_back(t_meeting);
+    m_dirty = true;
 }
 
 std::list<Meeting> Storage::queryMeeting(std::function<bool(const Meeting &)> filter) const{
@@ -215,6 +226,10 @@ int Storage::updateMeeting(std::function<bool(const Meeting &)> filter, std::fun
         }
     }
 
+    if(count > 0){
+        m_dirty = true;
+    }
+
     return count;
 }
 
@@ -231,14 +246,25 @@ int Storage::deleteMeeting(std::function<bool(const Meeting &)> filter){
         }
     }
 
+    if(count > 0){
+        m_dirty = true;
+    }
+
     return count;
 }
 
 bool Storage::sync(void){
-    if(writeToFile()){
-        return true;
+    if(m_dirty = true){
+        if(writeToFile()){
+            m_dirty = false;
+
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     else{
-        return false;
+        return true;
     }
 }
