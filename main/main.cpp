@@ -6,7 +6,30 @@ using namespace std;
 
 int main(){
 
+    auto storage = Storage::getInstance();
+    list<Meeting> us = storage->queryMeeting([](const Meeting a) -> bool{return true;});
 
-    cout << Date::isValid(Date("1000-10-10/00:00"));
+    for(auto i : us){
+    cout << i.getSponsor() << endl;
+
+        for(auto p : i.getParticipator()){
+            cout << p << endl;
+        }
+    cout << Date::dateToString(i.getStartDate()) << endl;
+
+    cout << Date::dateToString(i.getEndDate()) << endl;
+    cout << i.getTitle() << endl<<endl;
+    }
+
+    Meeting m;
+    
+    m.setSponsor("Geralt of Rivia");
+    m.setParticipator({"Naked Snake","Lara Croft"});
+    m.setStartDate(Date("2016-07-10/15:00"));
+    m.setEndDate(Date("2016-07-10/18:00"));
+    m.setTitle("Want a few rounds of Gwent?");
+     storage->createMeeting(m);
+    // cout << storage->sync();
+
     return 0;
 }

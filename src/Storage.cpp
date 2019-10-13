@@ -2,6 +2,7 @@
 #include<regex>
 #include"Storage.hpp"
 #include"Path.hpp"
+#include<iostream>
 
 std::shared_ptr<Storage> Storage::m_instance = NULL;
 
@@ -64,17 +65,11 @@ bool Storage::readFromFile(void){
         std::string s;
         std::regex format("\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\"");
         std::smatch match; 
-        User u;
 
         while(std::getline(ifile, s)) {
             std::regex_match(s,match,format);
             m_userList.push_back(User(match[1].str(), match[2].str(), 
                 match[3].str(), match[4].str()));
-            u.setName(match[1].str());
-            u.setPassword(match[2].str());
-            u.setEmail(match[3].str());
-            u.setPhone(match[4].str());
-          m_userList.push_back(u);
         }
 
         ifile.close();
@@ -89,7 +84,6 @@ bool Storage::readFromFile(void){
 
 bool Storage::writeToFile(void){
     std::ofstream ofile;
-
 //meeting
     ofile.open(Path::meetingPath);
 
@@ -99,15 +93,11 @@ bool Storage::writeToFile(void){
         for(auto meeting : m_meetingList){
             s_meetingList += "\"" + meeting.getSponsor() + "\",\"";
 
-            for(auto i = meeting.getParticipator().begin(); i != meeting.getParticipator().end(); i++){
-                if(i + 1 == meeting.getParticipator().end()){
-                    s_meetingList += *i;
-                }
-                else{
-                    s_meetingList += *i + "&";
-                }
+            for(auto i : meeting.getParticipator()){
+                s_meetingList += i + "&";
             }
 
+            s_meetingList.pop_back();
             s_meetingList += "\",\"" + Date::dateToString(meeting.getStartDate()) + "\",\"" + Date::dateToString(meeting.getEndDate()) + "\",\"" + meeting.getTitle() + "\"\n";
 
         }
@@ -120,8 +110,9 @@ bool Storage::writeToFile(void){
         return false;
     }
 
-//User
+// //User
     ofile.open(Path::userPath);
+
 
     if(ofile.is_open()){
         std::string s_userList;
