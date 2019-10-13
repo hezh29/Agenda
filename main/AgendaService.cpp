@@ -9,15 +9,17 @@ AgendaService::~AgendaService(){
 }
 
 bool AgendaService::userLogIn(const std::string &userName, const std::string &password){
-    auto users = m_storage->queryUser([&](const User & user) -> bool {
-        if(user.getName() == userName){
-            if(user.getPassword() == password){
-                return true;
+    auto users = m_storage->queryUser(
+        [&](const User & user) -> bool {
+            if(user.getName() == userName){
+                if(user.getPassword() == password){
+                    return true;
+                }
             }
-        }
 
-        return false;
-    });
+            return false;
+        }
+    );
 
     if(users.size() == 1){
         return true;
@@ -28,13 +30,15 @@ bool AgendaService::userLogIn(const std::string &userName, const std::string &pa
 }
 
 bool AgendaService::userRegister(const std::string &userName, const std::string &password, const std::string &email, const std::string &phone){
-    auto users = m_storage->queryUser([&userName](const User & user) -> bool {
-        if(user.getName() == userName){
-            return true;
-        }
+    auto users = m_storage->queryUser(
+        [&userName](const User & user) -> bool {
+            if(user.getName() == userName){
+                return true;
+            }
 
-        return false;
-    });
+            return false;
+        }
+    );
 
     if(users.size() == 0){
         m_storage->createUser({userName, password, email, phone});
@@ -58,20 +62,33 @@ bool AgendaService::deleteUser(const std::string &userName, const std::string &p
             }, 
             [&userName](Meeting & meeting) -> void{
                 meeting.removeParticipator(userName);
-            });
+            }
+        );
 
+        m_storage->deleteMeeting(
+            [&userName](const Meeting & meeting) -> bool{
+                if(meeting.getSponsor() == userName){
+                    return true;
+                }
+                else if(meeting.getParticipator().size() == 0){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        );
 
-        m_storage->deleteMeeting([&userName](const Meeting & meeting) -> bool{
-            if(meeting.getSponsor() == userName){
-                return true;
+        m_storage->deleteUser(
+            [&userName](const User &user) -> bool{
+                if(user.getName() == userName){
+                    return true;
+                }
+                else{
+                    return false;
+                }
             }
-            else if(meeting.getParticipator().size() == 0){
-                return true;
-            }
-            else{
-                return false;
-            }
-        });
+        );
 
     }
     else{
@@ -79,3 +96,8 @@ bool AgendaService::deleteUser(const std::string &userName, const std::string &p
     }
 }
 
+std::list<User> AgendaService::listAllUsers(void) const{
+    auto users = m_storage->queryUser([](const User &user) -> bool{return true;});
+
+    return users;
+}
