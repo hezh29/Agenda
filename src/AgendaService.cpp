@@ -128,13 +128,15 @@ bool AgendaService::createMeeting(const std::string &userName, const std::string
     for(auto i = m_participator.begin(); i != m_participator.end();){
 
         if(userName == *i){
-            i = m_participator.erase(i);
-            continue;
+            // i = m_participator.erase(i);
+            // continue;
+            return false;
         }
 
         for(auto j = i + 1; j != m_participator.end();){
             if(*j == *i){
-                j = m_participator.erase(j);
+                // j = m_participator.erase(j);
+                return false;
             }
             else{
                 j++;
@@ -153,8 +155,9 @@ bool AgendaService::createMeeting(const std::string &userName, const std::string
         );
 
         if(p_users.size() == 0){
-            i = m_participator.erase(i);
-            continue;
+            // i = m_participator.erase(i);
+            // continue;
+            return false;
         }
 
         i++;
@@ -370,7 +373,7 @@ std::list<Meeting> AgendaService::listAllSponsorMeetings(const std::string &user
 std::list<Meeting> AgendaService::listAllParticipateMeetings(const std::string &userName) const{
     auto meetings = m_storage->queryMeeting(
         [&userName](const Meeting meeting) -> bool{
-            if(meeting.isParticipator(userName)){
+            if(meeting.isParticipator(userName) && meeting.getSponsor() != userName){
                 return true;
             }
             else{
