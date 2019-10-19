@@ -1,4 +1,4 @@
-CC := g++
+11CC := g++
 FLAGS := -std=c++2a -w -g -pthread
 INC_DIR := include
 SRC_DIR := src
