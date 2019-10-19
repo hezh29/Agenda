@@ -107,7 +107,7 @@ std::list<User> AgendaService::listAllUsers(void) const{
 
 
 bool AgendaService::createMeeting(const std::string &userName, const std::string &title, const std::string &startDate, const std::string &endDate, const std::vector<std::string> &participator){
-        
+
     auto m_participator = participator;
 
     if(!(Date::isValid(startDate) && Date::isValid(endDate)) || Date(startDate) >= Date(endDate)){
@@ -132,7 +132,7 @@ bool AgendaService::createMeeting(const std::string &userName, const std::string
             continue;
         }
 
-        for(auto j = i + 1; j != participator.end();){
+        for(auto j = i + 1; j != m_participator.end();){
             if(*j == *i){
                 j = m_participator.erase(j);
             }
@@ -187,6 +187,7 @@ bool AgendaService::createMeeting(const std::string &userName, const std::string
 
     if(users.size() != 0 && meetings.size() == 0 && m_participator.size() != 0){
         m_storage->createMeeting(Meeting(userName, m_participator, startDate, endDate, title));
+        return true;
     }
     else{
         return false;
