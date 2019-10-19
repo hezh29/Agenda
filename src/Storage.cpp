@@ -23,16 +23,16 @@ bool Storage::readFromFile(void){
         std::string s;
         std::regex format("\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\",\"(.*)\"");
         std::smatch match; 
-        Meeting m;
 
         while(std::getline(ifile, s)) {
+            Meeting m;
             std::regex_match(s,match,format);
             m.setSponsor(match[1].str());
             std::string s_paticipators = match[2].str();
             m.setStartDate(match[3].str());
             m.setEndDate(match[4].str());
             m.setTitle(match[5].str());
-
+            
             int pos = 0, count = 0;
 
             while(pos + count < s_paticipators.size()){
