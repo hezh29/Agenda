@@ -5,7 +5,7 @@ AgendaService::AgendaService(){
 }
 
 AgendaService::~AgendaService(){
-
+    m_storage->sync();
 }
 
 bool AgendaService::userLogIn(const std::string &userName, const std::string &password){
@@ -419,4 +419,9 @@ bool AgendaService::deleteAllMeetings(const std::string &userName){
     else{
         return false;
     }
+}
+
+void AgendaService::startAgenda(void){}
+void AgendaService::quitAgenda(void){
+    m_storage->sync();
 }
