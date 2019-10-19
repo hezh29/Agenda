@@ -1,4 +1,3 @@
-#include"AgendaService.hpp"
 #include"Storage.hpp"
 #include<iostream>
 
@@ -6,38 +5,31 @@
 using namespace std;
 
 int main(){
-    // auto s = Storage::getInstance();
 
-    // for(auto i:s->queryMeeting([](const Meeting & m)->bool{return true;})){
-    //     cout<<i.getTitle()<<endl;
-    //     for(auto j:  i.getParticipator()){
-    //         cout << j<<endl;
+    auto storage = Storage::getInstance();
+    cout << storage->updateMeeting([](const Meeting a) -> bool{if(a.getSponsor()[0] == 'G')return true;return false;}, [](Meeting &a) -> void{a.setTitle("p");});
+
+    // for(auto i : us){
+    // cout << i.getSponsor() << endl;
+
+    //     for(auto p : i.getParticipator()){
+    //         cout << p << endl;
     //     }
-    //     cout<<endl;
+    // cout << Date::dateToString(i.getStartDate()) << endl;
+
+    // cout << Date::dateToString(i.getEndDate()) << endl;
+    // cout << i.getTitle() << endl<<endl;
     // }
-    // int k;
-    // cin>>k;
 
-    AgendaService m_service;
-
-    m_service.userRegister("na", "pb", "ec", "hd");
-    m_service.userRegister("nb", "pb", "ec", "hd");
-    m_service.userRegister("nc", "pc", "ec", "hd");
-    m_service.userRegister("nd", "pc", "ec", "hd");
-    m_service.userRegister("ne", "pc", "ec", "hd");
-    m_service.userRegister("nf", "pc", "ec", "hd");
-
-
-    m_service.createMeeting("na", "tb", "2016-08-01/00:00", "2016-08-01/12:00", {"nb", "na", "nd"});
-    m_service.createMeeting("na", "tf", "2026-08-01/00:00", "2026-08-01/12:00", {"nb", "na", "nd", "nc"});
-    m_service.createMeeting("na", "tg", "2036-08-01/00:00", "2036-08-01/12:00", {"nb", "na", "nd"});
-
-    m_service.createMeeting("nc", "tc", "2056-08-01/11:00", "2056-09-01/12:00", { "na"});
-
-    m_service.createMeeting("nc", "tc", "2046-08-01/11:00", "2046-09-01/12:00", { "na"});
+    Meeting m;
     
-
-
+    // m.setSponsor("Geralt of Rivia");
+    // m.setParticipator({"Naked Snake","Lara Croft"});
+    // m.setStartDate(Date("2016-07-10/15:00"));
+    // m.setEndDate({"2016-07-10/18:00"});
+    // m.setTitle("Want a few rounds of Gwent?");
+    //  storage->createMeeting(m);
+    //  cout << storage->sync();
 
     return 0;
 }
