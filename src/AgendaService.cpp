@@ -155,9 +155,9 @@ bool AgendaService::createMeeting(const std::string &userName, const std::string
         );
 
         if(p_users.size() == 0){
-            i = m_participator.erase(i);
-            continue;
-            // return false;
+            // i = m_participator.erase(i);
+            // continue;
+            return false;
         }
 
         i++;
