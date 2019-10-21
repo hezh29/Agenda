@@ -117,6 +117,7 @@ class AgendaService {
    * @param userName user's username
    * @return a meeting list result
    */
+
   std::list<Meeting> listAllMeetings(const std::string &userName) const;
 
   /**

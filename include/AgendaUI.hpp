@@ -98,6 +98,13 @@ class AgendaUI {
      */
     void deleteAllMeetings(void);
 
+
+	void addParticipator(void);
+
+	void removeParticipator(void);
+
+	void quitMeeting(void);
+
     /**
      * show the meetings in the screen
      */
@@ -105,6 +112,7 @@ class AgendaUI {
     // dates
     std::string m_userName;
     std::string m_userPassword;
+	bool isLogin;
     AgendaService m_agendaService;
 };
 
